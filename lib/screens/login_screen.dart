@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:segunda_aplicacion/assets/global_values.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
+  const LoginScreen({Key? key}) : super(key: key);
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -10,6 +10,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    GlobalValues.flagTheme.value = GlobalValues.prefs.getBool('teme') ?? false;
+    GlobalValues.flagTheme.value = GlobalValues.teme.getBool('teme') ?? false;
     TextEditingController txtConUser = TextEditingController();
     TextEditingController txtConPass = TextEditingController();
 
@@ -40,6 +42,15 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushNamed(context, '/dash');
         });
 
+    final session = Checkbox(
+        value: GlobalValues.session.getBool('session') ?? false,
+        activeColor: Colors.orange,
+        onChanged: (bool? newbool) {
+          setState(() {
+            GlobalValues.session.setBool('session', newbool!);
+          });
+        });
+
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -56,15 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.bottomCenter,
             children: [
               Container(
-                height: 200,
+                height: 260,
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Color.fromARGB(255, 151, 26, 26)),
                 //color: Colors.blueGrey,
-                child: Column(
-                    children: [txtUser, const SizedBox(height: 10), txtPass]),
+                child: Column(children: [
+                  txtUser,
+                  const SizedBox(height: 10),
+                  txtPass,
+                  session,
+                  const Text("Guardar session")
+                ]),
               ),
               Container(
                   padding: const EdgeInsets.only(bottom: 200), child: imgLogo)

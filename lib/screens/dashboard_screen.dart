@@ -1,4 +1,6 @@
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:segunda_aplicacion/assets/global_values.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -40,14 +42,42 @@ class DashboardScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/practic2');
             },
           ),
-          /* DayNightSwitcherIcon(
-            isDarkModeEnabled: isDarkModeEnabled,
-            onStateChanged: (isDarkModeEnabled) {
-              setState(() {
-                this.isDarkModeEnabled = isDarkModeEnabled;
-              });
+          ListTile(
+            leading: Icon(Icons.task),
+            trailing: const Icon(Icons.task),
+            title: const Text('Tareas'),
+            subtitle: const Text('No se :v'),
+            onTap: () {
+              Navigator.pushNamed(context, '/task');
             },
-          ), */
+          ),
+          ListTile(
+            leading: Icon(Icons.add_task),
+            trailing: const Icon(Icons.task),
+            title: const Text('Tareas'),
+            subtitle: const Text('No se :v'),
+            onTap: () {
+              Navigator.pushNamed(context, '/addtask');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            trailing: const Icon(Icons.task),
+            title: const Text('logout'),
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: DayNightSwitcher(
+              isDarkModeEnabled: GlobalValues.flagTheme.value,
+              onStateChanged: (isDarkModeEnabled) {
+                GlobalValues.teme.setBool('teme', isDarkModeEnabled);
+                GlobalValues.flagTheme.value = isDarkModeEnabled;
+              },
+            ),
+          ),
         ],
       ),
     );
