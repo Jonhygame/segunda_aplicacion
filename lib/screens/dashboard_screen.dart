@@ -57,7 +57,7 @@ class DashboardScreen extends StatelessWidget {
             title: const Text('Tareas'),
             subtitle: const Text('No se :v'),
             onTap: () {
-              Navigator.pushNamed(context, '/addtask');
+              Navigator.pushNamed(context, '/tarea');
             },
           ),
           ListTile(
@@ -66,6 +66,46 @@ class DashboardScreen extends StatelessWidget {
             title: const Text('logout'),
             onTap: () {
               Navigator.pushNamed(context, '/login');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.api),
+            trailing: const Icon(Icons.api),
+            title: const Text('API'),
+            onTap: () {
+              Navigator.pushNamed(context, '/popular');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.date_range),
+            trailing: const Icon(Icons.dataset),
+            title: const Text('Calendario'),
+            onTap: () {
+              Navigator.pushNamed(context, '/calendar');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            trailing: const Icon(Icons.person),
+            title: const Text('Profesores'),
+            onTap: () {
+              Navigator.pushNamed(context, '/professor');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.document_scanner),
+            trailing: const Icon(Icons.document_scanner),
+            title: const Text('Carreras'),
+            onTap: () {
+              Navigator.pushNamed(context, '/carreras');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home_work),
+            trailing: const Icon(Icons.home_work),
+            title: const Text('Task'),
+            onTap: () {
+              Navigator.pushNamed(context, '/tasks');
             },
           ),
           Padding(

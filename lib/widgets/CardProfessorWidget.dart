@@ -1,38 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:segunda_aplicacion/assets/global_values.dart';
-import 'package:segunda_aplicacion/database/agendadb.dart';
-import 'package:segunda_aplicacion/models/task_model.dart';
-import 'package:segunda_aplicacion/screens/add_task.dart';
+import 'package:segunda_aplicacion/models/profesor_model.dart';
+import 'package:segunda_aplicacion/screens/add_professor.dart';
 
-/*class CardTaskWidget extends StatelessWidget {
-  CardTaskWidget({super.key, required this.taskModel});
+import '../database/agendadb.dart';
 
-  TaskModel taskModel;
+class CardProfeWidget extends StatelessWidget {
+  CardProfeWidget({super.key, required this.profeModel, this.agendaDB});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: [
-        Column(
-          children: [
-            Text(taskModel.idTask.toString()),
-            Text(taskModel.nameTask.toString())
-          ],
-        ),
-        Column(
-          children: [
-            Text(taskModel.dscTask.toString()),
-            Text(taskModel.sttTask.toString())
-          ],
-        )
-      ]),
-    );
-  }
-}*/
-class CardTaskWidget extends StatelessWidget {
-  CardTaskWidget({super.key, required this.taskModel, this.agendaDB});
-
-  TaskModel taskModel;
+  ProfessorModel profeModel;
   AgendaDB? agendaDB;
 
   @override
@@ -44,9 +20,8 @@ class CardTaskWidget extends StatelessWidget {
       child: Row(
         children: [
           Column(
-            children: [Text(taskModel.nomTask!), Text(taskModel.desTask!)],
+            children: [Text(profeModel.nameProfessor!)],
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.abc_outlined)),
           Expanded(
             child: Container(),
           ),
@@ -56,7 +31,8 @@ class CardTaskWidget extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AddTask(taskModel: taskModel))),
+                        builder: (context) =>
+                            AddProfe(profeModel: profeModel))),
                 child: Image.asset('assets/icon_orange.png', height: 50),
               ),
               IconButton(
@@ -66,17 +42,17 @@ class CardTaskWidget extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           title: Text('Mensaje del sistema'),
-                          content: Text('¿Deseas borrar la tarea?'),
+                          content: Text('¿Deseas borrar el profesor?'),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   agendaDB!
-                                      .DELETE4('tblTask', 'idTask',
-                                          taskModel.idTask!)
+                                      .DELETE4('tblProfesor', 'idProfessor',
+                                          profeModel.idProfessor!)
                                       .then((value) {
                                     Navigator.pop(context);
-                                    GlobalValues.flagTask.value =
-                                        !GlobalValues.flagTask.value;
+                                    GlobalValues.flagPR4Profe.value =
+                                        !GlobalValues.flagPR4Profe.value;
                                   });
                                 },
                                 child: Text('Si')),

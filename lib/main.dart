@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
         });
   }
 }*/
+
 import 'package:flutter/material.dart';
 import 'package:segunda_aplicacion/assets/global_values.dart';
 import 'package:segunda_aplicacion/assets/styles_app.dart';
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
         builder: (context, value, _) {
           return MaterialApp(
               home: GlobalValues.session.getBool('session') ?? false
-                  ? DashboardScreen()
+                  ? const DashboardScreen()
                   : const LoginScreen(),
               routes: getRoutes(),
               //theme: ThemeData.dark(),

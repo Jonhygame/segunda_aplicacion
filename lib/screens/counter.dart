@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CounterDesign extends StatefulWidget {
+  const CounterDesign({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _CounterDesign();

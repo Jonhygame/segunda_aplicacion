@@ -1,38 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:segunda_aplicacion/assets/global_values.dart';
 import 'package:segunda_aplicacion/database/agendadb.dart';
-import 'package:segunda_aplicacion/models/task_model.dart';
-import 'package:segunda_aplicacion/screens/add_task.dart';
+import 'package:segunda_aplicacion/models/tarea_model.dart';
+import 'package:segunda_aplicacion/screens/add_tarea.dart';
 
-/*class CardTaskWidget extends StatelessWidget {
-  CardTaskWidget({super.key, required this.taskModel});
+class CardTareaWidget extends StatelessWidget {
+  CardTareaWidget({super.key, required this.tareaModel, this.agendaDB});
 
-  TaskModel taskModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: [
-        Column(
-          children: [
-            Text(taskModel.idTask.toString()),
-            Text(taskModel.nameTask.toString())
-          ],
-        ),
-        Column(
-          children: [
-            Text(taskModel.dscTask.toString()),
-            Text(taskModel.sttTask.toString())
-          ],
-        )
-      ]),
-    );
-  }
-}*/
-class CardTaskWidget extends StatelessWidget {
-  CardTaskWidget({super.key, required this.taskModel, this.agendaDB});
-
-  TaskModel taskModel;
+  TareaModel tareaModel;
   AgendaDB? agendaDB;
 
   @override
@@ -44,9 +19,11 @@ class CardTaskWidget extends StatelessWidget {
       child: Row(
         children: [
           Column(
-            children: [Text(taskModel.nomTask!), Text(taskModel.desTask!)],
+            children: [
+              Text(tareaModel.nombreTarea!),
+              Text(tareaModel.descTarea!)
+            ],
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.abc_outlined)),
           Expanded(
             child: Container(),
           ),
@@ -56,7 +33,8 @@ class CardTaskWidget extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AddTask(taskModel: taskModel))),
+                        builder: (context) =>
+                            AddTarea(tareaModel: tareaModel))),
                 child: Image.asset('assets/icon_orange.png', height: 50),
               ),
               IconButton(
@@ -71,12 +49,11 @@ class CardTaskWidget extends StatelessWidget {
                             TextButton(
                                 onPressed: () {
                                   agendaDB!
-                                      .DELETE4('tblTask', 'idTask',
-                                          taskModel.idTask!)
+                                      .DELETE('tblTareas', tareaModel.idTarea!)
                                       .then((value) {
                                     Navigator.pop(context);
-                                    GlobalValues.flagTask.value =
-                                        !GlobalValues.flagTask.value;
+                                    GlobalValues.flagPR4Task.value =
+                                        !GlobalValues.flagPR4Task.value;
                                   });
                                 },
                                 child: Text('Si')),
