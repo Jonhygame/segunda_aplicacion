@@ -5,7 +5,7 @@ class TaskModel {
   DateTime? fecRecordatorio;
   String? desTask;
   int? realizada;
-  int? idProfessorssor;
+  int? idProfessor;
 
   TaskModel(
       {this.idTask,
@@ -14,7 +14,7 @@ class TaskModel {
       this.fecRecordatorio,
       this.desTask,
       this.realizada,
-      this.idProfessorssor});
+      this.idProfessor});
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
@@ -24,6 +24,6 @@ class TaskModel {
         fecRecordatorio: DateTime.tryParse(map['fecRecordatorio'] as String),
         desTask: map['desTask'],
         realizada: map['realizada'],
-        idProfessorssor: map['idProfessorssor']);
+        idProfessor: map['idProfessor']);
   }
 }

@@ -16,11 +16,11 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   //final _formKey = GlobalKey<FormState>();
   TextEditingController taskNameController = TextEditingController();
-  DateTime? expiracionDate;
-  DateTime? recordatorioDate;
+  DateTime? expiracionDate = DateTime.now();
+  DateTime? recordatorioDate = DateTime.now();
   TextEditingController taskDescController = TextEditingController();
   int? selectedTaskStatus;
-  int? selectedidProfessorssorsor;
+  int? selectedidProfessorsor;
   List<TaskStatus> taskStatusList = [
     TaskStatus(0, 'Pendiente'),
     TaskStatus(1, 'En proceso'),
@@ -40,7 +40,7 @@ class _AddTaskState extends State<AddTask> {
       recordatorioDate = widget.taskModel?.fecRecordatorio;
       taskDescController.text = widget.taskModel!.desTask!;
       selectedTaskStatus = widget.taskModel?.realizada;
-      selectedidProfessorssorsor = widget.taskModel?.idProfessorssor;
+      selectedidProfessorsor = widget.taskModel?.idProfessor;
     }
   }
 
@@ -71,7 +71,7 @@ class _AddTaskState extends State<AddTask> {
               'fecRecordatorio': recordatorioDate!.toIso8601String(),
               'desTask': taskDescController.text,
               'realizada': selectedTaskStatus,
-              'idProfessorssor': selectedidProfessorssorsor,
+              'idProfessor': selectedidProfessorsor,
             }).then((value) {
               print(recordatorioDate);
               var msj =
@@ -91,7 +91,7 @@ class _AddTaskState extends State<AddTask> {
                       'fecRecordatorio': recordatorioDate!.toIso8601String(),
                       'desTask': taskDescController.text,
                       'realizada': selectedTaskStatus,
-                      'idProfessorssor': selectedidProfessorssorsor,
+                      'idProfessor': selectedidProfessorsor,
                     },
                     'idTask',
                     widget.taskModel!.idTask!)
@@ -167,7 +167,7 @@ class _AddTaskState extends State<AddTask> {
                   if (snapshot.hasData) {
                     profesores = snapshot.data!;
                     return DropdownButtonFormField<int>(
-                      value: selectedidProfessorssorsor,
+                      value: selectedidProfessorsor,
                       items: profesores.map((profesor) {
                         return DropdownMenuItem<int>(
                           value: profesor.idProfessor,
@@ -176,7 +176,7 @@ class _AddTaskState extends State<AddTask> {
                       }).toList(),
                       onChanged: (value) {
                         setState(() {
-                          selectedidProfessorssorsor = value;
+                          selectedidProfessorsor = value;
                         });
                       },
                       decoration: const InputDecoration(labelText: 'Profesor'),

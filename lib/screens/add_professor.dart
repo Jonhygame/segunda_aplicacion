@@ -68,12 +68,12 @@ class _AddProfeState extends State<AddProfe> {
                 .UPDATE4(
                     'tblProfesor',
                     {
-                      'idProfessorssor': widget.profeModel!.idProfessor,
+                      'idProfessor': widget.profeModel!.idProfessor,
                       'nameProfessor': txtProfeName.text,
                       'email': txtProfeemail.text,
                       'idCareer': selectedidCareer,
                     },
-                    'idProfessorssor',
+                    'idProfessor',
                     widget.profeModel!.idProfessor!)
                 .then((value) {
               GlobalValues.flagPR4Profe.value =

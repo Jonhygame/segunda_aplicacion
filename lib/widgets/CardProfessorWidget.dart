@@ -20,7 +20,10 @@ class CardProfeWidget extends StatelessWidget {
       child: Row(
         children: [
           Column(
-            children: [Text(profeModel.nameProfessor!)],
+            children: [
+              //Text(key as String),
+              Text(profeModel.nameProfessor!)
+            ],
           ),
           Expanded(
             child: Container(),
@@ -50,9 +53,27 @@ class CardProfeWidget extends StatelessWidget {
                                       .DELETE4('tblProfesor', 'idProfessor',
                                           profeModel.idProfessor!)
                                       .then((value) {
-                                    Navigator.pop(context);
-                                    GlobalValues.flagPR4Profe.value =
-                                        !GlobalValues.flagPR4Profe.value;
+                                    if (value == 0) {
+                                      Navigator.pop(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text('Alerta'),
+                                              content: Text('Tiene asignado.'),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                    child: Text('Entendido')),
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.pop(context);
+                                      GlobalValues.flagPR4Profe.value =
+                                          !GlobalValues.flagPR4Profe.value;
+                                    }
                                   });
                                 },
                                 child: Text('Si')),

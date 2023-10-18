@@ -47,7 +47,7 @@ class AgendaDB {
     // Crear la tabla tblProfesor
     await db.execute('''
     CREATE TABLE tblProfesor(
-      idProfessorssor INTEGER PRIMARY KEY,
+      idProfessor INTEGER PRIMARY KEY,
       nameProfessor VARCHAR(80),
       email VARCHAR(50),
       idCareer INTEGER,
@@ -64,8 +64,8 @@ class AgendaDB {
       fecRecordatorio DATETIME,
       desTask TEXT,
       realizada INTEGER,
-      idProfessorssor INTEGER,
-      foreign key(idProfessorssor) REFERENCES tblProfe(idProfessorssor)
+      idProfessor INTEGER,
+      foreign key(idProfessor) REFERENCES tblProfe(idProfessor)
     )
   ''');
   }
@@ -126,9 +126,18 @@ class AgendaDB {
         .update(tblName, data, where: '$whereCampo = ?', whereArgs: [id]);
   }
 
-  Future<int> DELETE4(String tblName, String whereCampo, int id) async {
+  Future<bool> _hasTaskForProfe(int idProfe) async {
     var conexion = await database;
-    return conexion!.delete(tblName, where: '$whereCampo = ?', whereArgs: [id]);
+    var result = await conexion!
+        .query('tblTask', where: 'idProfessor = ?', whereArgs: [idProfe]);
+    return result.isNotEmpty;
+  }
+
+  Future<bool> _hasProfeForCarrera(int idCareer) async {
+    var conexion = await database;
+    var result = await conexion!
+        .query('tblProfesor', where: 'idCareer = ?', whereArgs: [idCareer]);
+    return result.isNotEmpty;
   }
 
   Future<List<CareerModel>> searchCarreras(String searchTerm) async {
@@ -136,6 +145,32 @@ class AgendaDB {
     var result = await conexion!.query('tblCarrera',
         where: 'nameCareer LIKE ?', whereArgs: ['%$searchTerm%']);
     return result.map((carrera) => CareerModel.fromMap(carrera)).toList();
+  }
+
+  Future<int> DELETE4(String tblName, String whereCampo, int id) async {
+    var conexion = await database;
+    switch (tblName) {
+      case 'tblCarrera':
+        bool hasProfessors = await _hasProfeForCarrera(id);
+        if (hasProfessors) {
+          return 0;
+        } else {
+          return conexion!
+              .delete(tblName, where: '$whereCampo = ?', whereArgs: [id]);
+        }
+      case 'tblProfesor':
+        bool hasProfessors = await _hasTaskForProfe(id);
+        if (hasProfessors) {
+          return 0;
+        } else {
+          return conexion!
+              .delete(tblName, where: '$whereCampo = ?', whereArgs: [id]);
+        }
+      case 'tblTask':
+        return conexion!
+            .delete(tblName, where: '$whereCampo = ?', whereArgs: [id]);
+    }
+    return conexion!.delete(tblName, where: '$whereCampo = ?', whereArgs: [id]);
   }
 
   Future<List<ProfessorModel>> searchProfesores(String searchTerm) async {

@@ -80,16 +80,16 @@ class _TareaScreenState extends State<TareaScreen> {
               icon: const Icon(Icons.task)),
           IconButton(
               onPressed: () =>
+                  Navigator.pushNamed(context, '/carreras').then((value) {
+                    setState(() {});
+                  }),
+              icon: const Icon(Icons.folder_copy)),
+          IconButton(
+              onPressed: () =>
                   Navigator.pushNamed(context, '/professor').then((value) {
                     setState(() {});
                   }),
               icon: const Icon(Icons.person_3)),
-          IconButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, '/carreras').then((value) {
-                    setState(() {});
-                  }),
-              icon: const Icon(Icons.folder_copy))
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(150.0),

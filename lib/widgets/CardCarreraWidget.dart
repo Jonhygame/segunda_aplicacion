@@ -49,9 +49,27 @@ class CardCarreraWidget extends StatelessWidget {
                                       .DELETE4('tblCarrera', 'idCareer',
                                           carreraModel.idCareer!)
                                       .then((value) {
-                                    Navigator.pop(context);
-                                    GlobalValues.flagPR4Carrera.value =
-                                        !GlobalValues.flagPR4Carrera.value;
+                                    if (value == 0) {
+                                      Navigator.pop(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Text('Alerta'),
+                                              content: Text('Tiene asginada.'),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                    child: Text('Entendido')),
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.pop(context);
+                                      GlobalValues.flagPR4Carrera.value =
+                                          !GlobalValues.flagPR4Carrera.value;
+                                    }
                                   });
                                 },
                                 child: Text('Si')),

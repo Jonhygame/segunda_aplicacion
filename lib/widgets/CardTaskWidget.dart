@@ -46,7 +46,23 @@ class CardTaskWidget extends StatelessWidget {
           Column(
             children: [Text(taskModel.nomTask!), Text(taskModel.desTask!)],
           ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.abc_outlined)),
+          IconButton(
+              onPressed: () {
+                agendaDB!
+                    .UPDATE4('tblTask', {'realizada': 2}, 'idTask',
+                        taskModel.idTask!)
+                    .then((value) {
+                  GlobalValues.flagPR4Task.value =
+                      !GlobalValues.flagPR4Task.value;
+                  var msj = (value > 0)
+                      ? 'La actualización fue exitosa'
+                      : 'Ocurrió un error';
+                  var snackbar = SnackBar(content: Text(msj));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                  Navigator.pop(context);
+                });
+              },
+              icon: Icon(Icons.check_circle)),
           Expanded(
             child: Container(),
           ),
