@@ -7,12 +7,18 @@ import 'package:segunda_aplicacion/screens/calendar_screen.dart';
 import 'package:segunda_aplicacion/screens/carrera_screen.dart';
 import 'package:segunda_aplicacion/screens/dashboard_screen.dart';
 import 'package:segunda_aplicacion/screens/item_screen.dart';
+import 'package:segunda_aplicacion/screens/listweather_screen.dart';
 import 'package:segunda_aplicacion/screens/login_screen.dart';
+import 'package:segunda_aplicacion/screens/maps_screen.dart';
+import 'package:segunda_aplicacion/screens/popular_firebase_screen.dart';
 import 'package:segunda_aplicacion/screens/popular_screen.dart';
 import 'package:segunda_aplicacion/screens/practica2_screen.dart';
 import 'package:segunda_aplicacion/screens/profesor_screen.dart';
+import 'package:segunda_aplicacion/screens/register_screen.dart';
 import 'package:segunda_aplicacion/screens/tarea_screen.dart';
 import 'package:segunda_aplicacion/screens/task_screen.dart';
+import 'package:segunda_aplicacion/screens/weather_screen.dart';
+//import 'package:segunda_aplicacion/screens/weather_screen.dart';
 
 Map<String, WidgetBuilder> getRoutes() {
   return <String, WidgetBuilder>{
@@ -30,5 +36,11 @@ Map<String, WidgetBuilder> getRoutes() {
     '/addTask': (BuildContext context) => AddTask(),
     '/addProfe': (BuildContext context) => AddProfe(),
     '/addCarrera': (BuildContext context) => AddCarrera(),
+    '/register': (BuildContext context) => const RegisterScreen(),
+    '/maps': (BuildContext context) => const MapScreen(),
+    '/weather': (BuildContext context) => WeatherScreen(),
+    '/listweather': (BuildContext context) => const listWeatherMarks(),
+    '/PopularFirebase': (BuildContext context) =>
+        const PopularFirebaseScreeen(),
   };
 }

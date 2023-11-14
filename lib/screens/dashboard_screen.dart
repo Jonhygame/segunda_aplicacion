@@ -52,15 +52,6 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.add_task),
-            trailing: const Icon(Icons.task),
-            title: const Text('Tareas'),
-            subtitle: const Text('No se :v'),
-            onTap: () {
-              Navigator.pushNamed(context, '/tarea');
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.logout),
             trailing: const Icon(Icons.task),
             title: const Text('logout'),
@@ -106,6 +97,38 @@ class DashboardScreen extends StatelessWidget {
             title: const Text('Task'),
             onTap: () {
               Navigator.pushNamed(context, '/tasks');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.maps_home_work),
+            trailing: const Icon(Icons.maps_ugc),
+            title: const Text('Maps'),
+            onTap: () {
+              Navigator.pushNamed(context, '/maps');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.masks_sharp),
+            trailing: const Icon(Icons.map_sharp),
+            title: const Text('weather'),
+            onTap: () {
+              Navigator.pushNamed(context, '/weather');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.location_history),
+            trailing: const Icon(Icons.location_history),
+            title: const Text('list weather mark'),
+            onTap: () {
+              Navigator.pushNamed(context, '/listweather');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.link_rounded),
+            trailing: const Icon(Icons.link_rounded),
+            title: const Text('Popular Firebase'),
+            onTap: () {
+              Navigator.pushNamed(context, '/PopularFirebase');
             },
           ),
           Padding(

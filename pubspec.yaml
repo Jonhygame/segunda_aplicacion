@@ -16,8 +16,17 @@ dependencies:
   shared_preferences: ^2.2.1
   http: ^1.1.0
   table_calendar: ^3.0.9
+  youtube_player_flutter: ^8.1.2
+  flutter_rating_stars: ^1.0.3+4
   flutter:
     sdk: flutter
+  firebase_core: ^2.21.0
+  firebase_auth: ^4.12.1
+  cloud_firestore: ^4.12.2
+  firebase_storage: ^11.4.1
+  google_maps_flutter: ^2.5.0
+  location: ^5.0.3
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -30,4 +39,5 @@ flutter:
     - assets/images/.
     - assets/animation/.
     - assets/
+    - animation/.
 

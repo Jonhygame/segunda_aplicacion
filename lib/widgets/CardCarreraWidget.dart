@@ -4,6 +4,7 @@ import 'package:segunda_aplicacion/database/agendadb.dart';
 import 'package:segunda_aplicacion/models/carrera_model.dart';
 import 'package:segunda_aplicacion/screens/add_carrera.dart';
 
+// ignore: must_be_immutable
 class CardCarreraWidget extends StatelessWidget {
   CardCarreraWidget({super.key, required this.carreraModel, this.agendaDB});
 

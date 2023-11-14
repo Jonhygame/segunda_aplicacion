@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:segunda_aplicacion/models/carrera_model.dart';
+import 'package:segunda_aplicacion/models/popular_model.dart';
 import 'package:segunda_aplicacion/models/profesor_model.dart';
 import 'package:segunda_aplicacion/models/tarea_model.dart';
 import 'package:segunda_aplicacion/models/task_model.dart';
@@ -68,6 +69,51 @@ class AgendaDB {
       foreign key(idProfessor) REFERENCES tblProfe(idProfessor)
     )
   ''');
+    await db.execute('''CREATE TABLE tblFavoritas(
+        id INTEGER PRIMARY KEY,
+        backdropPath TEXT,
+        originalLanguage TEXT,
+        originalTitle TEXT,
+        overview TEXT,
+        popularity REAL,
+        posterPath TEXT,
+        releaseDate TEXT,
+        title TEXT,
+        voteAverage REAL,
+        voteCount INTEGER,
+        isFavorite INTEGER
+      );''');
+    await db.execute('''CREATE TABLE tblWeather(idLocation INTEGER PRIMARY KEY,
+                                              nombre varchar(255),
+                                              latitud REAL,
+                                              longitud REAL
+                                              );''');
+  }
+
+  // Insertar película favorita
+  Future<int> insertFavoriteMovie(PopularModel movie) async {
+    var conexion = await database;
+    return conexion!.insert('tblFavoritas', movie.toMap());
+  }
+
+  // Actualizar película favorita
+  Future<int> updateFavoriteMovie(PopularModel movie) async {
+    var conexion = await database;
+    return conexion!.update('tblFavoritas', movie.toMap(),
+        where: 'id = ?', whereArgs: [movie.id]);
+  }
+
+  // Eliminar película favorita
+  Future<int> deleteFavoriteMovie(int id) async {
+    var conexion = await database;
+    return conexion!.delete('tblFavoritas', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // Obtener todas las películas favoritas
+  Future<List<PopularModel>> getFavoriteMovies() async {
+    var conexion = await database;
+    var result = await conexion!.query('tblFavoritas', where: 'isFavorite = 1');
+    return result.map((movie) => PopularModel.fromMap(movie)).toList();
   }
 
   //CRUD tblTareas
@@ -207,5 +253,27 @@ class AgendaDB {
     var result = await conexion!.query('tblTask',
         where: 'DATE(fecExpiracion) = ?', whereArgs: [formattedDate]);
     return result.map((task) => TaskModel.fromMap(task)).toList();
+  }
+
+  Future<int> insertLocation(Map<String, dynamic> data) async {
+    var connection = await database;
+    return connection!.insert('tblWeather', data);
+  }
+
+  Future<int> updateLocation(Map<String, dynamic> data) async {
+    var connection = await database;
+    return connection!.update('tblWeather', data,
+        where: 'idLocation = ?', whereArgs: [data['idLocation']]);
+  }
+
+  Future<int> deleteLocation(int idLocation) async {
+    var connection = await database;
+    return connection!
+        .delete('tblWeather', where: 'idLocation = ?', whereArgs: [idLocation]);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllLocations() async {
+    var connection = await database;
+    return connection!.query('tblWeather');
   }
 }

@@ -4,6 +4,7 @@ import 'package:segunda_aplicacion/database/agendadb.dart';
 import 'package:segunda_aplicacion/models/profesor_model.dart';
 import 'package:segunda_aplicacion/models/task_model.dart';
 
+// ignore: must_be_immutable
 class AddTask extends StatefulWidget {
   AddTask({super.key, this.taskModel});
 
@@ -58,28 +59,47 @@ class _AddTaskState extends State<AddTask> {
       controller: taskDescController,
     );
 
-    final space = SizedBox(
+    const space = SizedBox(
       height: 10,
     );
 
     final ElevatedButton btnGuardar = ElevatedButton(
         onPressed: () {
           if (widget.taskModel == null) {
-            agendaDB!.INSERT('tblTask', {
-              'nomTask': taskNameController.text,
-              'fecExpiracion': expiracionDate!.toIso8601String(),
-              'fecRecordatorio': recordatorioDate!.toIso8601String(),
-              'desTask': taskDescController.text,
-              'realizada': selectedTaskStatus,
-              'idProfessor': selectedidProfessorsor,
-            }).then((value) {
-              print(recordatorioDate);
-              var msj =
-                  (value > 0) ? 'La inserción fue exitosa' : 'Ocurrió un error';
-              var snackbar = SnackBar(content: Text(msj));
-              ScaffoldMessenger.of(context).showSnackBar(snackbar);
-              Navigator.pop(context);
-            });
+            if (taskNameController.text != '' &&
+                taskDescController.text != '' &&
+                selectedTaskStatus != null &&
+                selectedidProfessorsor != null) {
+              agendaDB!.INSERT('tblTask', {
+                'nomTask': taskNameController.text,
+                'fecExpiracion': expiracionDate!.toIso8601String(),
+                'fecRecordatorio': recordatorioDate!.toIso8601String(),
+                'desTask': taskDescController.text,
+                'realizada': selectedTaskStatus,
+                'idProfessor': selectedidProfessorsor,
+              }).then((value) {
+                var msj = (value > 0)
+                    ? 'La inserción fue exitosa'
+                    : 'Ocurrió un error';
+                var snackbar = SnackBar(content: Text(msj));
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                Navigator.pop(context);
+              });
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Awas'),
+                      content: const Text('Llena todos los datos profis'),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Entendido')),
+                      ],
+                    );
+                  });
+            }
           } else {
             agendaDB!
                 .UPDATE4(
@@ -106,13 +126,13 @@ class _AddTaskState extends State<AddTask> {
             });
           }
         },
-        child: Text('Guardar Tarea'));
+        child: const Text('Guardar Tarea'));
 
     return Scaffold(
       appBar: AppBar(
         title: widget.taskModel == null
-            ? Text('Agregar Tarea')
-            : Text('Editar Tarea'),
+            ? const Text('Agregar Tarea')
+            : const Text('Editar Tarea'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -155,7 +175,7 @@ class _AddTaskState extends State<AddTask> {
                   selectedTaskStatus = value;
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Estado',
               ),
             ),
@@ -185,7 +205,7 @@ class _AddTaskState extends State<AddTask> {
                     return const Text('No se encontraron profesores');
                   }
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               },
             ),
@@ -210,7 +230,8 @@ class DateTimePicker extends StatelessWidget {
   final DateTime selectedDate;
   final ValueChanged<DateTime> onDateSelected;
 
-  DateTimePicker({
+  const DateTimePicker({
+    super.key,
     required this.labelText,
     required this.selectedDate,
     required this.onDateSelected,
@@ -223,11 +244,11 @@ class DateTimePicker extends StatelessWidget {
       children: <Widget>[
         Text(
           labelText,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         ElevatedButton(
           onPressed: () {
             showDatePicker(
@@ -243,7 +264,7 @@ class DateTimePicker extends StatelessWidget {
           },
           child: Text(
             selectedDate.toLocal().toString().split(' ')[0],
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
             ),
           ),

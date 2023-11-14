@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segunda_aplicacion/assets/global_values.dart';
+import 'package:segunda_aplicacion/firebase/email_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final emailAuth = EmailAuth();
     GlobalValues.flagTheme.value = GlobalValues.prefs.getBool('teme') ?? false;
     GlobalValues.flagTheme.value = GlobalValues.teme.getBool('teme') ?? false;
     TextEditingController txtConUser = TextEditingController();
@@ -39,7 +41,17 @@ class _LoginScreenState extends State<LoginScreen> {
         icon: const Icon(Icons.login),
         label: const Text('Send'),
         onPressed: () {
-          Navigator.pushNamed(context, '/dash');
+          var email = txtConUser.text;
+          var pass = txtConPass.text;
+          emailAuth.login(emailLogin: email, pwdLogin: pass);
+          //Navigator.pushNamed(context, '/dash');
+        });
+
+    final btnRegister = FloatingActionButton.extended(
+        icon: const Icon(Icons.bookmark_add),
+        label: const Text('Register :)'),
+        onPressed: () {
+          Navigator.pushNamed(context, '/register');
         });
 
     final session = Checkbox(
@@ -78,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   txtUser,
                   const SizedBox(height: 10),
                   txtPass,
+                  btnRegister,
                   session,
                   const Text("Guardar session")
                 ]),

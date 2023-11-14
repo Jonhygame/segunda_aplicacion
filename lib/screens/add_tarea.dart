@@ -3,6 +3,7 @@ import 'package:segunda_aplicacion/assets/global_values.dart';
 import 'package:segunda_aplicacion/database/agendadb.dart';
 import 'package:segunda_aplicacion/models/tarea_model.dart';
 
+// ignore: must_be_immutable
 class AddTarea extends StatefulWidget {
   AddTarea({super.key, this.tareaModel});
 
@@ -55,7 +56,7 @@ class _AddTareaState extends State<AddTarea> {
       controller: txtConDsc,
     );
 
-    final space = SizedBox(
+    const space = SizedBox(
       height: 10,
     );
 
@@ -101,13 +102,13 @@ class _AddTareaState extends State<AddTarea> {
             });
           }
         },
-        child: Text('Guardar Tarea'));
+        child: const Text('Guardar Tarea'));
 
     return Scaffold(
       appBar: AppBar(
         title: widget.tareaModel == null
-            ? Text('Agregar tarea')
-            : Text('Actualizar tarea'),
+            ? const Text('Agregar tarea')
+            : const Text('Actualizar tarea'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),

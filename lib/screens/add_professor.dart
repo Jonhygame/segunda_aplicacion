@@ -4,6 +4,7 @@ import 'package:segunda_aplicacion/database/agendadb.dart';
 import 'package:segunda_aplicacion/models/carrera_model.dart';
 import 'package:segunda_aplicacion/models/profesor_model.dart';
 
+// ignore: must_be_immutable
 class AddProfe extends StatefulWidget {
   AddProfe({super.key, this.profeModel});
 
@@ -45,24 +46,43 @@ class _AddProfeState extends State<AddProfe> {
       controller: txtProfeemail,
     );
 
-    final space = SizedBox(
+    const space = SizedBox(
       height: 10,
     );
 
     final ElevatedButton btnGuardar = ElevatedButton(
         onPressed: () {
           if (widget.profeModel == null) {
-            agendaDB!.INSERT('tblProfesor', {
-              'nameProfessor': txtProfeName.text,
-              'email': txtProfeemail.text,
-              'idCareer': selectedidCareer,
-            }).then((value) {
-              var msj =
-                  (value > 0) ? 'La inserción fue exitosa' : 'Ocurrió un error';
-              var snackbar = SnackBar(content: Text(msj));
-              ScaffoldMessenger.of(context).showSnackBar(snackbar);
-              Navigator.pop(context);
-            });
+            if (txtProfeName.text != '' &&
+                txtProfeemail.text != '' &&
+                selectedidCareer != null) {
+              agendaDB!.INSERT('tblProfesor', {
+                'nameProfessor': txtProfeName.text,
+                'email': txtProfeemail.text,
+                'idCareer': selectedidCareer,
+              }).then((value) {
+                var msj = (value > 0)
+                    ? 'La inserción fue exitosa'
+                    : 'Ocurrió un error';
+                var snackbar = SnackBar(content: Text(msj));
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                Navigator.pop(context);
+              });
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Awas'),
+                      content: const Text('Llena todos los datos profis'),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Entendido')),
+                      ],
+                    );
+                  });
+            }
           } else {
             agendaDB!
                 .UPDATE4(
@@ -87,13 +107,13 @@ class _AddProfeState extends State<AddProfe> {
             });
           }
         },
-        child: Text('Guardar profesor'));
+        child: const Text('Guardar profesor'));
 
     return Scaffold(
       appBar: AppBar(
         title: widget.profeModel == null
-            ? Text('Agregar profesor')
-            : Text('Actualizar profesor'),
+            ? const Text('Agregar profesor')
+            : const Text('Actualizar profesor'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -130,7 +150,7 @@ class _AddProfeState extends State<AddProfe> {
                     return const Text('No se encontraron carreras');
                   }
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               },
             ),
