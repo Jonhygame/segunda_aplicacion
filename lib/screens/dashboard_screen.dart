@@ -2,14 +2,20 @@ import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:segunda_aplicacion/assets/global_values.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Bienvenidos :D')),
       drawer: createDrawer(context),
+      body: Center(child: Text('asd')),
     );
   }
 
@@ -117,14 +123,14 @@ class DashboardScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.location_history),
-            trailing: const Icon(Icons.location_history),
+            trailing: const Icon(Icons.map_sharp),
             title: const Text('list weather mark'),
             onTap: () {
               Navigator.pushNamed(context, '/listweather');
             },
           ),
           ListTile(
-            leading: Icon(Icons.link_rounded),
+            leading: Icon(Icons.fire_extinguisher),
             trailing: const Icon(Icons.link_rounded),
             title: const Text('Popular Firebase'),
             onTap: () {

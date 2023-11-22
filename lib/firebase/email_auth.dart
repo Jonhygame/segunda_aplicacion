@@ -17,12 +17,9 @@ class EmailAuth {
   Future<bool> login(
       {required String emailLogin, required String pwdLogin}) async {
     try {
-      final credentials = await auth
-          .signInWithEmailAndPassword(email: emailLogin, password: pwdLogin)
-          .catchError(
-              (onError) => print('Error sending email verification $onError'))
-          .then((value) => print('Successfully sent email verification'));
-
+      final credentials = await auth.signInWithEmailAndPassword(
+          email: emailLogin, password: pwdLogin);
+      print(credentials.user!.emailVerified.toString());
       return true;
     } catch (e) {
       return false;

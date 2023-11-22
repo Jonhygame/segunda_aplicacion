@@ -37,7 +37,6 @@ class _LocationDetailScreenState extends State<LocationDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),

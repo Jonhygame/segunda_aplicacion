@@ -16,27 +16,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Register a user')),
-      body: Column(
-        children: [
-          TextFormField(
-            controller: conName,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100.0),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                height: 370,
+                margin: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 151, 26, 26)),
+                //color: Colors.blueGrey,
+                child: Column(children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), label: Text('Nombre')),
+                    controller: conName,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), label: Text('Email')),
+                    controller: conEmailUser,
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), label: Text('Password')),
+                    controller: conPassUser,
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                      onPressed: () {
+                        var email = conEmailUser.text;
+                        var pass = conPassUser.text;
+                        emailAuth.createUser(emailUser: email, pwdUser: pass);
+                      },
+                      child: Text("Guardar")),
+                ]), //Container(padding: const EdgeInsets.only(bottom: 200), child: imgLogo)
+              )
+            ],
           ),
-          TextFormField(
-            controller: conEmailUser,
-          ),
-          TextFormField(
-            controller: conPassUser,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                var email = conEmailUser.text;
-                var pass = conPassUser.text;
-                emailAuth.createUser(emailUser: email, pwdUser: pass);
-              },
-              child: Text("Guardar")),
-        ],
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

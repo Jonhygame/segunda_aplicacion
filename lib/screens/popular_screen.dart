@@ -18,11 +18,12 @@ class _PopularScreenState extends State<PopularScreen> {
 
   @override
   void initState() {
+    super.initState();
     apiPopular = ApiPopular();
     final db = AgendaDB();
     db.getFavoriteMovies().then((favoriteMoviesList) {
       if (showFavoritesOnly) {
-        favoriteMovies = favoriteMoviesList;
+        favoriteMovies = favoriteMovies + favoriteMoviesList;
       }
     });
   }
@@ -31,6 +32,11 @@ class _PopularScreenState extends State<PopularScreen> {
     setState(() {
       showFavoritesOnly = !showFavoritesOnly;
     });
+  }
+
+  void _deletedb() {
+    final db = AgendaDB();
+    db.getFavoriteMovies().then((value) => print(value));
   }
 
   @override
@@ -43,7 +49,8 @@ class _PopularScreenState extends State<PopularScreen> {
               onPressed: _toggleFavoritesOnly,
               icon: showFavoritesOnly
                   ? const Icon(Icons.favorite)
-                  : const Icon(Icons.favorite_border_outlined))
+                  : const Icon(Icons.favorite_border_outlined)),
+          IconButton(onPressed: _deletedb, icon: Icon(Icons.abc))
         ],
       ),
       body: FutureBuilder(

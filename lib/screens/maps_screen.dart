@@ -95,12 +95,12 @@ class _MapScreenState extends State<MapScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: IconButton(
         onPressed: () => _getCurrentLocation(),
-        label: const Text('Mi ubicación'),
+        color: Colors.black,
         icon: const Icon(Icons.my_location),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
     );
   }
 
@@ -139,7 +139,7 @@ class _MapScreenState extends State<MapScreen> {
             title: locationName,
             snippet: 'Temperatura: $currentTemperature°C',
           ),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         ),
       });
     });
@@ -151,7 +151,7 @@ class _MapScreenState extends State<MapScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Nuevo marcador'),
+          title: Text('Marcador'),
           content: Container(
             height: 100,
             child: Column(
@@ -162,7 +162,7 @@ class _MapScreenState extends State<MapScreen> {
                   onChanged: (value) {
                     locationName = value;
                   },
-                  decoration: InputDecoration(labelText: 'Nombre del marcador'),
+                  decoration: InputDecoration(label: Text('Nombre')),
                 )
               ],
             ),

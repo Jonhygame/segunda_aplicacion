@@ -104,6 +104,12 @@ class AgendaDB {
   }
 
   // Eliminar película favorita
+  Future<int> deleteallFavoriteMovie() async {
+    var conexion = await database;
+    return conexion!.delete('tblFavoritas');
+  }
+
+  // Eliminar película favorita
   Future<int> deleteFavoriteMovie(int id) async {
     var conexion = await database;
     return conexion!.delete('tblFavoritas', where: 'id = ?', whereArgs: [id]);

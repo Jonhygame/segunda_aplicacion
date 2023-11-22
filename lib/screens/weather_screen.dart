@@ -34,8 +34,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
+    return SafeArea(
+        child: Scaffold(
       body: Center(
         child: dailyTemperatures.isNotEmpty
             ? Column(
@@ -179,6 +179,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
               )
             : Text('Cargando datos...'),
       ),
-    );
+    ));
   }
 }

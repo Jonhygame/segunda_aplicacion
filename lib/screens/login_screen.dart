@@ -18,12 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
     TextEditingController txtConPass = TextEditingController();
 
     final txtUser = TextField(
-      decoration: const InputDecoration(border: OutlineInputBorder()),
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(), label: Text('Correo')),
       controller: txtConUser,
     );
 
     final txtPass = TextField(
-      decoration: const InputDecoration(border: OutlineInputBorder()),
+      decoration: const InputDecoration(
+          border: OutlineInputBorder(), label: Text('Password')),
       controller: txtConPass,
       obscureText: true,
     );
@@ -64,22 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              opacity: .9,
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                  'https://3.bp.blogspot.com/-mzvJajghb3I/VsLT1mLAm6I/AAAAAAAAB0w/ABTEMT8oCoA/s1600/fondos%2Bde%2Bpantalla%2Bhd%2B.jpg')),
-        ),
+      body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100.0),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
               Container(
-                height: 260,
+                height: 370,
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
@@ -90,19 +84,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   txtUser,
                   const SizedBox(height: 10),
                   txtPass,
+                  const SizedBox(
+                    height: 10,
+                  ),
                   btnRegister,
+                  const SizedBox(height: 10),
+                  btnEntrar,
                   session,
-                  const Text("Guardar session")
+                  const Text("Guardar session"),
                 ]),
               ),
-              Container(
-                  padding: const EdgeInsets.only(bottom: 200), child: imgLogo)
+              //Container(padding: const EdgeInsets.only(bottom: 200), child: imgLogo)
             ],
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: btnEntrar,
     );
   }
 }

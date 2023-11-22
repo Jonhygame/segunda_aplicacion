@@ -24,6 +24,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   bool isFavorite = false;
   @override
   void initState() {
+    super.initState();
     ApiTrailer().getTrailerVideoKey(widget.movie.id!).then((key) {
       setState(() {
         trailerKey = key;
@@ -41,15 +42,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     setState(() {
       isFavorite = !isFavorite;
       widget.movie.isFavorite = isFavorite;
+      //agregar codigo para guardar en la bd
       final db = AgendaDB();
       if (isFavorite) {
         // Verifica si la película ya existe en la base de datos
         db.getFavoriteMovies().then((existingMovie) {
           bool movieExist =
               existingMovie.any((movie) => movie.id == widget.movie.id);
-
           if (!movieExist) {
             // La película no existe en la base de datos, realiza una inserción
+            print(
+                'La siguiente pelicula se marco como favorita por lo que se guardará en la bd');
             db.insertFavoriteMovie(widget.movie).then((_) {
               db.getFavoriteMovies().then((favoriteMoviesList) {
                 setState(() {
@@ -58,9 +61,27 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 });
               });
             });
+            print(widget.movie.id);
+            print(widget.movie.originalLanguage);
+            print(widget.movie.originalTitle);
+            print(widget.movie.overview);
+            print(widget.movie.popularity);
+            print(widget.movie.posterPath);
+            print(widget.movie.releaseDate);
+            print(widget.movie.title);
+            print(widget.movie.voteAverage);
+            print(widget.movie.voteCount);
           } else {
             // La película ya existe en la base de datos, puedes optar por actualizarla
             // Aquí puedes implementar la lógica de actualización si es necesario.
+            db.insertFavoriteMovie(widget.movie).then((_) {
+              db.getFavoriteMovies().then((favoriteMoviesList) {
+                setState(() {
+                  widget.favoriteMovies.clear();
+                  widget.favoriteMovies.addAll(favoriteMoviesList);
+                });
+              });
+            });
           }
         });
       } else {
@@ -69,7 +90,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           db.getFavoriteMovies().then((favoriteMoviesList) {
             setState(() {
               widget.favoriteMovies.clear();
-              widget.favoriteMovies.add(favoriteMoviesList as PopularModel);
+              widget.favoriteMovies.addAll(favoriteMoviesList);
             });
           });
         });
